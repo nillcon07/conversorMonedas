@@ -1,7 +1,7 @@
 # 💱 Alura Challenge - Conversor de Monedas
 
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Finished-brightgreen?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Process-orange?style=for-the-badge)
 
 Solución al desafío de Backend de **Alura Latam + Oracle Next Education**. Una aplicación de consola robusta que realiza conversiones de divisas en tiempo real consumiendo la API de Exchange Rate.
 

@@ -20,6 +20,9 @@ El desarrollo siguió una metodología ágil utilizando **Trello** para la gesti
     * ARS (Peso Argentino)
     * BRL (Real Brasileño)
     * COP (Peso Colombiano)
+    * EUR (Euro)
+    * CNY (Yuan)
+    * JPY (Yen)
     * (Y otras soportadas por la API)
 
 ##  Tecnologías Utilizadas

@@ -11,10 +11,10 @@ Este proyecto es un conversor de monedas que interactúa con una API externa par
 El desarrollo siguió una metodología ágil utilizando **Trello** para la gestión de tareas (Backlog, En Progreso, Concluido).
 
 ##  Características
-* **Consumo de API:** Conexión HTTP con `ExchangeRate-API`.
-* **Deserialización de JSON:** Transformación de respuestas JSON a objetos Java (DTOs).
-* **Interfaz de Menú:** Ciclo interactivo (`while loop`) que permite múltiples conversiones sin reiniciar el programa.
-* **Manejo de Errores:** Gestión de excepciones (`try-catch`) para entradas inválidas o fallos de conexión.
+* **Consumo de API:** 
+* **Deserialización de JSON:** 
+* **Interfaz de Menú:** 
+* **Manejo de Errores:** 
 * **Soporte de Monedas:**
     * USD (Dólar Estadounidense)
     * ARS (Peso Argentino)
@@ -24,7 +24,8 @@ El desarrollo siguió una metodología ágil utilizando **Trello** para la gesti
     * CNY (Yuan)
     * JPY (Yen)
     * (Y otras soportadas por la API)
-
+ * **Historial de conversiones con fecha**
+  
 ##  Tecnologías Utilizadas
 * **Java JDK 25** (Uso de `HttpClient`, `HttpRequest`, `HttpResponse`).
 * **Gson (Google):** Librería para el parseo y mapeo de JSON a Objetos Java.

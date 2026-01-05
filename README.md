@@ -8,8 +8,6 @@ Solución al desafío de Backend de **Alura Latam + Oracle Next Education**. Una
 ##  Descripción del Proyecto
 Este proyecto es un conversor de monedas que interactúa con una API externa para obtener tasas de cambio actualizadas.
 
-El desarrollo siguió una metodología ágil utilizando **Trello** para la gestión de tareas (Backlog, En Progreso, Concluido).
-
 ##  Características
 * **Consumo de API:** 
 * **Deserialización de JSON:** 

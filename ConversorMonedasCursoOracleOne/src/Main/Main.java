@@ -73,7 +73,7 @@ public class Main {
                     // printf para que se vea en 2 decimales mas "estetico"
                     System.out.printf("El valor de: %.2f %s es: %.2f %s%n", valor, divisaTypeFrom, resultado, divisaTypeGo);
 
-                    // 3. AGREGADO: Guardamos la operación en la lista
+                    // Guarda la operación en la lista
                     String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                     String registro = String.format("[%s] %.2f %s -> %.2f %s", timestamp, valor, divisaTypeFrom, resultado, divisaTypeGo);
                     historial.add(registro);

@@ -3,10 +3,10 @@
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Process-orange?style=for-the-badge)
 
-Solución al desafío de Backend de **Alura Latam + Oracle Next Education**. Una aplicación de consola robusta que realiza conversiones de divisas en tiempo real consumiendo la API de Exchange Rate.
+Solución al desafío de Backend de **Alura Latam + Oracle Next Education**. Una aplicación que realiza conversiones de divisas en tiempo real usando la API de Exchange Rate.
 
 ##  Descripción del Proyecto
-Este proyecto es un conversor de monedas que interactúa con una API externa para obtener tasas de cambio actualizadas. A diferencia de un conversor estático, este programa maneja respuestas JSON dinámicas, realiza la conversión basándose en datos en tiempo real y presenta una interfaz de usuario basada en menús interactivos en la consola.
+Este proyecto es un conversor de monedas que interactúa con una API externa para obtener tasas de cambio actualizadas.
 
 El desarrollo siguió una metodología ágil utilizando **Trello** para la gestión de tareas (Backlog, En Progreso, Concluido).
 

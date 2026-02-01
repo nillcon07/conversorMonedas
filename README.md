@@ -72,4 +72,3 @@ Este proyecto interactúa con **ExchangeRate-API**.
 
 ---
 
-Desarrollado como parte de la formación académica en Ingeniería Informática.

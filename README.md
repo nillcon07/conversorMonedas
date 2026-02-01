@@ -1,10 +1,4 @@
-Basado en el código fuente que has subido, aquí tienes una propuesta de **README.md** profesional y actualizado. Este documento refleja fielmente las tecnologías que estás usando (Spring Boot 4, Java 25, Thymeleaf) y las funcionalidades reales de tu código (historial en memoria, consumo de API con HttpClient, interfaz con Bootstrap).
-
-Puedes copiar y pegar el siguiente contenido directamente en tu archivo `README.md`.
-
----
-
-# 💱 Conversor de Monedas UADE
+# 💱 Conversor de Monedas 
 
 Una aplicación web moderna y elegante para realizar conversiones de divisas en tiempo real. Desarrollada como solución para el desafío de Backend, utiliza la API de ExchangeRate para obtener tasas de cambio actualizadas y ofrece una interfaz de usuario pulida con animaciones CSS.
 

@@ -1,6 +1,6 @@
 package com.Proyecto.ConversorMonedas;
 
-import com.Proyecto.ConversorMonedas.Modelos.ConversionRates;
+import com.Proyecto.ConversorMonedas.Modelos.TasasConversion;
 import com.Proyecto.ConversorMonedas.Modelos.Transaccion;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
@@ -45,7 +45,7 @@ public class ControladorWeb {
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            ConversionRates respuesta = gson.fromJson(response.body(), ConversionRates.class);
+            TasasConversion respuesta = gson.fromJson(response.body(), TasasConversion.class);
 
             // Verificamos si existe la moneda destino
             if (respuesta.conversion_rates() != null && respuesta.conversion_rates().containsKey(destino)) {

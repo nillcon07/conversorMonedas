@@ -18,10 +18,10 @@ public class Transaccion {
         this.fecha = fecha;
     }
 
-    // Getters (necesarios si alguna vez quieres acceder a propiedades individuales)
+    // Getters
     public double getResultado() { return resultado; }
 
-    // ESTE MÉTODO ES CLAVE: Define cómo se ve la transacción en el historial del HTML
+    //Define cómo se ve la transacción en el historial del HTML
     @Override
     public String toString() {
         // Formato: "100.00 USD -> 95200.50 ARS (15:30)"

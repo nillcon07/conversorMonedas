@@ -26,15 +26,21 @@ public class ControladorWeb {
     private final Gson gson = new Gson();
 
     // Esto maneja la página principal (GET)
-    @GetMapping("/")
+@GetMapping("/")
     public String inicio(Model model, HttpSession session) {
-        // Obtenemos o creamos la lista solo para el usuario (privacidad)
-        List<Transaccion> Usuario = (List<Transaccion>) session.getAttribute("");
-        if (Usuario == null) {
-            Usuario = new ArrayList<>();
-            session.setAttribute("", Usuario);
+        // Recuperar la lista de la sesión
+        @SuppressWarnings("unchecked")
+        List<Transaccion> historialUsuario = (List<Transaccion>) session.getAttribute("historial");
+        
+        // Si es nula, crear una nueva para que no de error en el HTML
+        if (historialUsuario == null) {
+            historialUsuario = new ArrayList<>();
+            session.setAttribute("historial", historialUsuario);
         }
-        model.addAttribute("", Usuario);
+        
+        // Pasar la lista a la vista
+        model.addAttribute("historial", historialUsuario);
+        
         return "index";
     }
 
@@ -89,3 +95,4 @@ public String convertir(
 }
 
 }
+

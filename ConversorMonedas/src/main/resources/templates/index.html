@@ -835,5 +835,18 @@
             window.history.replaceState(null, null, window.location.href);
         }
     </script>
+    <script th:inline="javascript">
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const origenGuardado = /*[[${monedaOrigen}]]*/ null;
+        const destinoGuardado = /*[[${monedaDestino}]]*/ null;
+        
+        if (origenGuardado) {
+            document.getElementById('origenSelect').value = origenGuardado;
+        }
+        if (destinoGuardado) {
+            document.getElementById('destinoSelect').value = destinoGuardado;
+        }
+    });
+</script>
 </body>
 </html>

@@ -38,9 +38,9 @@ public class ControladorWeb {
         return "index";
     }
 
-    // Esto maneja el botón "Convertir" (POST)
-    @PostMapping("/convertir")
-    public String convertir(
+    // Esto maneja el botón "" (POST)
+    @PostMapping("/")
+    public String (
             @RequestParam double cantidad,
             @RequestParam String origen,
             @RequestParam String destino,
@@ -74,8 +74,8 @@ public class ControladorWeb {
                 redirectAttributes.addFlashAttribute("mensaje", "Conversión exitosa");
 
                 // Mantener selección
-                redirectAttributes.addFlashAttribute("param.origen", origen);
-                redirectAttributes.addFlashAttribute("param.destino", destino);
+                redirectAttributes.addFlashAttribute("monedaOrigen", origen);
+                redirectAttributes.addFlashAttribute("monedaDestino", destino);
             } else {
                 redirectAttributes.addFlashAttribute("error", "Moneda no encontrada o API falló.");
             }
@@ -86,4 +86,5 @@ public class ControladorWeb {
 
         return "redirect:/";
     }
+
 }

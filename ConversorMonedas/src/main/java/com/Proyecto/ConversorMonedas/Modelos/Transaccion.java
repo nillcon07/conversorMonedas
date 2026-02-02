@@ -1,9 +1,9 @@
 package com.Proyecto.ConversorMonedas.Modelos;
-
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Transaccion {
+public class Transaccion implements Serializable {
     private String origen;
     private String destino;
     private double cantidad;
@@ -29,4 +29,5 @@ public class Transaccion {
         return String.format("%.2f %s ➔ %.2f %s (%s)",
                 cantidad, origen, resultado, destino, fecha.format(formatter));
     }
+
 }

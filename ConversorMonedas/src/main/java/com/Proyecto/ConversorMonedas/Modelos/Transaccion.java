@@ -1,9 +1,13 @@
 package com.Proyecto.ConversorMonedas.Modelos;
-import java.io.Serializable;
+
+import java.io.Serializable; 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Transaccion implements Serializable {
+    
+    private static final long serialVersionUID = 1L; 
+
     private String origen;
     private String destino;
     private double cantidad;
@@ -18,16 +22,12 @@ public class Transaccion implements Serializable {
         this.fecha = fecha;
     }
 
-    // Getters
     public double getResultado() { return resultado; }
 
-    //Define cómo se ve la transacción en el historial del HTML
     @Override
     public String toString() {
-        // Formato: "100.00 USD -> 95200.50 ARS (15:30)"
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return String.format("%.2f %s ➔ %.2f %s (%s)",
                 cantidad, origen, resultado, destino, fecha.format(formatter));
     }
-
 }

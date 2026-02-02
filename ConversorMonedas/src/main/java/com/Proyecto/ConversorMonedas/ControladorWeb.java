@@ -29,12 +29,12 @@ public class ControladorWeb {
     @GetMapping("/")
     public String inicio(Model model, HttpSession session) {
         // Obtenemos o creamos la lista solo para el usuario (privacidad)
-        List<Transaccion> historialUsuario = (List<Transaccion>) session.getAttribute("historial");
-        if (historialUsuario == null) {
-            historialUsuario = new ArrayList<>();
-            session.setAttribute("historial", historialUsuario);
+        List<Transaccion> Usuario = (List<Transaccion>) session.getAttribute("");
+        if (Usuario == null) {
+            Usuario = new ArrayList<>();
+            session.setAttribute("", Usuario);
         }
-        model.addAttribute("historial", historialUsuario);
+        model.addAttribute("", Usuario);
         return "index";
     }
 
@@ -67,7 +67,8 @@ public class ControladorWeb {
                     historialUsuario = new ArrayList<>();
                     session.setAttribute("historial", historialUsuario);
                 }
-                historialUsuario.add(0, nuevaTx); // Agregamos a SU lista
+                historialUsuario.add(0, nuevaTx);
+                session.setAttribute("historial", historialUsuario); 
                 // ------------------------------------------
 
                 redirectAttributes.addFlashAttribute("resultado", resultado);
@@ -88,3 +89,4 @@ public class ControladorWeb {
     }
 
 }
+

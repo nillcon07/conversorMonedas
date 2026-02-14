@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de monedas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables CSS */
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --success: #38ef7d;
+            --danger: #f15e64;
+        }
+
+        /* Fondo animado */
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            overflow-x: hidden;
+            padding: 40px 0;
+        }
+
+        /* Formas flotantes */
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .shape:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            left: 10%;
+            animation: float 25s infinite ease-in-out;
+        }
+
+        .shape:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 60%;
+            right: 10%;
+            animation: float 20s infinite ease-in-out 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            bottom: 10%;
+            left: 15%;
+            animation: float 30s infinite ease-in-out 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            50% {
+                transform: translate(30px, -30px) rotate(180deg);
+            }
+        }
+
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Logo */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+            animation: pulse 3s infinite;
+        }
+
+        .logo-circle i {
+            font-size: 35px;
+            color: white;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .app-title {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+
+        /* Tarjeta principal */
+        .converter-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* Header de la tarjeta */
+        .card-header-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            color: white;
+            border: none;
+        }
+
+        .card-header-custom h3 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Cuerpo de la tarjeta */
+        .card-body-custom {
+            padding: 40px;
+        }
+
+        /* Labels */
+        .form-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Inputs y selects */
+        .form-control,
+        .form-select {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px 18px 14px 52px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.12);
+        }
+
+        .form-control.is-invalid {
+            border-color: #f15e64;
+            padding-right: calc(1.5em + 0.75rem);
+            background-image: none;
+        }
+
+        /* Wrapper con icono */
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+
+        /* Mensaje de error personalizado */
+        .error-message {
+            display: none;
+            background: linear-gradient(135deg, #eb3941 0%, #f15e64 100%);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            animation: slideDown 0.3s ease;
+        }
+
+        .error-message.show {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .error-message i {
+            font-size: 1.1rem;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Notificación toast */
+        .toast-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 18px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            animation: slideInRight 0.4s ease;
+            max-width: 400px;
+        }
+
+        .toast-notification.success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .toast-notification i {
+            font-size: 1.3rem;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        /* Botón de intercambio */
+        .swap-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .swap-button {
+            background: white;
+            border: 3px solid #667eea;
+            width: auto;
+            padding: 12px 30px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.25);
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .swap-button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .swap-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .swap-button:hover .swap-icon {
+            transform: rotate(180deg);
+        }
+
+        .swap-icon i {
+            color: white;
+            font-size: 1rem;
+        }
+
+        /* Botón convertir */
+        .btn-convert {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 18px 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 12px;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+        }
+
+        .btn-convert:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Resultado */
+        .result-card {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border-radius: 16px;
+            padding: 35px;
+            margin-top: 30px;
+            box-shadow: 0 15px 40px rgba(17, 153, 142, 0.35);
+            color: white;
+            text-align: center;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-card i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .result-card h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        /* Error */
+        .error-card {
+            background: linear-gradient(135deg, #eb3941 0%, #f15e64 100%);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 30px;
+            color: white;
+            text-align: center;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .error-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* Historial */
+        .history-section {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .history-title {
+            color: #2d3748;
+            font-weight: 700;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .history-title i {
+            color: #667eea;
+        }
+
+        .history-count {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .history-item {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-left: 5px solid #667eea;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .history-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .history-number {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .history-details {
+            flex: 1;
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        .history-details i {
+            color: #667eea;
+            margin-right: 8px;
+        }
+
+        /* Footer */
+        .footer-info {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .footer-info p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app-title {
+                font-size: 2rem;
+            }
+            
+            .card-body-custom {
+                padding: 25px;
+            }
+            
+            .result-card h2 {
+                font-size: 2rem;
+            }
+            
+            .history-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .toast-notification {
+                left: 20px;
+                right: 20px;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Formas flotantes -->
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container" style="max-width: 650px;">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo-circle">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <h1 class="app-title">Currency Converter</h1>
+            <p class="app-subtitle">Convierte entre las principales monedas del mundo</p>
+        </div>
+
+        <!-- Tarjeta Principal -->
+        <div class="converter-card">
+            <div class="card-header-custom">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>
+                        <i class="fas fa-coins"></i>
+                        Conversor de Monedas
+                    </h3>
+                    <div class="header-badge">
+                        <i class="fas fa-bolt"></i> En vivo
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-body-custom">
+                <form action="/convertir" method="post" id="converterForm" onsubmit="return validarFormulario()">
+                    <!-- Monto -->
+                    <div class="mb-4">
+                        <label class="form-label">
+                            <i class="fas fa-dollar-sign text-primary"></i>
+                            Monto a convertir
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-coins input-icon"></i>
+                            <input
+                                type="number"
+                                step="0.01"
+                                name="cantidad"
+                                id="cantidadInput"
+                                class="form-control"
+                                onkeydown="if(['e', 'E', '+', '-'].includes(event.key)) event.preventDefault()"
+                                placeholder="Ingrese el monto (ej: 100.00)"
+                                required>
+                        </div>
+                        <div class="error-message" id="errorMonto">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Por favor ingrese un monto válido mayor a 0</span>
+                        </div>
+                    </div>
+
+                    <!-- Moneda Origen -->
+                    <div class="mb-4">
+                        <label class="form-label">
+                            <i class="fas fa-flag text-success"></i>
+                            Desde
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-globe input-icon"></i>
+                            <select name="origen" id="origenSelect" class="form-select" required>
+                                <option value="USD" selected>🇺🇸 USD - Dólar Estadounidense</option>
+                                <option value="EUR">🇪🇺 EUR - Euro</option>
+                                <option value="GBP">🇬🇧 GBP - Libra Esterlina</option>
+                                <option value="JPY">🇯🇵 JPY - Yen Japonés</option>
+                                <option value="ARS">🇦🇷 ARS - Peso Argentino</option>
+                                <option value="BRL">🇧🇷 BRL - Real Brasileño</option>
+                                <option value="CAD">🇨🇦 CAD - Dólar Canadiense</option>
+                                <option value="AUD">🇦🇺 AUD - Dólar Australiano</option>
+                                <option value="CHF">🇨🇭 CHF - Franco Suizo</option>
+                                <option value="CNY">🇨🇳 CNY - Yuan Chino</option>
+                                <option value="MXN">🇲🇽 MXN - Peso Mexicano</option>
+                                <option value="INR">🇮🇳 INR - Rupia India</option>
+                                <option value="KRW">🇰🇷 KRW - Won Surcoreano</option>
+                                <option value="RUB">🇷🇺 RUB - Rublo Ruso</option>
+                                <option value="CLP">🇨🇱 CLP - Peso Chileno</option>
+                                <option value="COP">🇨🇴 COP - Peso Colombiano</option>
+                                <option value="PEN">🇵🇪 PEN - Sol Peruano</option>
+                                <option value="UYU">🇺🇾 UYU - Peso Uruguayo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Botón Intercambiar -->
+                    <div class="swap-container">
+                        <button type="button" class="swap-button" onclick="intercambiarMonedas()">
+                            <div class="swap-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <span>Intercambiar</span>
+                        </button>
+                    </div>
+
+                    <!-- Moneda Destino -->
+                    <div class="mb-4">
+                        <label class="form-label">
+                            <i class="fas fa-bullseye text-danger"></i>
+                            Hacia
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-globe input-icon"></i>
+                            <select name="destino" id="destinoSelect" class="form-select" required>
+                                <option value="ARS" selected>🇦🇷 ARS - Peso Argentino</option>
+                                <option value="USD">🇺🇸 USD - Dólar Estadounidense</option>
+                                <option value="EUR">🇪🇺 EUR - Euro</option>
+                                <option value="GBP">🇬🇧 GBP - Libra Esterlina</option>
+                                <option value="JPY">🇯🇵 JPY - Yen Japonés</option>
+                                <option value="BRL">🇧🇷 BRL - Real Brasileño</option>
+                                <option value="CAD">🇨🇦 CAD - Dólar Canadiense</option>
+                                <option value="AUD">🇦🇺 AUD - Dólar Australiano</option>
+                                <option value="CHF">🇨🇭 CHF - Franco Suizo</option>
+                                <option value="CNY">🇨🇳 CNY - Yuan Chino</option>
+                                <option value="MXN">🇲🇽 MXN - Peso Mexicano</option>
+                                <option value="INR">🇮🇳 INR - Rupia India</option>
+                                <option value="KRW">🇰🇷 KRW - Won Surcoreano</option>
+                                <option value="RUB">🇷🇺 RUB - Rublo Ruso</option>
+                                <option value="CLP">🇨🇱 CLP - Peso Chileno</option>
+                                <option value="COP">🇨🇴 COP - Peso Colombiano</option>
+                                <option value="PEN">🇵🇪 PEN - Sol Peruano</option>
+                                <option value="UYU">🇺🇾 UYU - Peso Uruguayo</option>
+                            </select>
+                        </div>
+                        <div class="error-message" id="errorMonedas">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Las monedas de origen y destino deben ser diferentes</span>
+                        </div>
+                    </div>
+
+                    <!-- Botón Convertir -->
+                    <button type="submit" class="btn btn-convert w-100">
+                        <i class="fas fa-calculator me-2"></i>
+                        Convertir Moneda
+                        <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </form>
+
+                <!-- Resultado -->
+                <div th:if="${resultado}" class="result-card">
+                    <i class="fas fa-check-circle"></i>
+                    <p class="result-label">Resultado de la conversión</p>
+                    <h2>
+                        <span th:text="${resultado}">0.00</span>
+                        <small th:text="${monedaDestino}">ARS</small>
+                    </h2>
+                    <p class="result-label">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Tipo de cambio actualizado
+                    </p>
+                </div>
+
+                <!-- Error -->
+                <div th:if="${error}" class="error-card">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h5 class="mb-2">Error en la conversión</h5>
+                    <p class="mb-0" th:text="${error}"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historial -->
+        <div class="history-section" th:if="${historial != null and !#lists.isEmpty(historial)}">
+            <div class="history-header">
+                <div class="history-title">
+                    <i class="fas fa-history"></i>
+                    Historial de Conversiones
+                </div>
+                <div class="history-count">
+                    <span th:text="${#lists.size(historial)}">0</span> conversiones
+                </div>
+            </div>
+            <div th:each="item, iterStat : ${historial}" class="history-item">
+                <div class="history-number" th:text="${iterStat.count}">1</div>
+                <div class="history-details">
+                    <i class="fas fa-arrow-right"></i>
+                    <span th:text="${item}"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-info">
+            <p>
+                <i class="fas fa-shield-alt me-2"></i>
+                Conversiones seguras y confiables
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Función para intercambiar monedas
+        function intercambiarMonedas() {
+            const origen = document.getElementById('origenSelect');
+            const destino = document.getElementById('destinoSelect');
+            
+            const temp = origen.value;
+            origen.value = destino.value;
+            destino.value = temp;
+
+            // Ocultar error de monedas si estaba visible
+            document.getElementById('errorMonedas').classList.remove('show');
+        }
+
+        // Función para mostrar notificación toast
+        function mostrarNotificacion(mensaje, tipo = 'error') {
+            const toast = document.createElement('div');
+            toast.className = `toast-notification ${tipo}`;
+            
+            const icon = tipo === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle';
+            
+            toast.innerHTML = `
+                <i class="fas ${icon}"></i>
+                <span>${mensaje}</span>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOutRight 0.4s ease';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        // Validación del formulario
+        function validarFormulario() {
+            const cantidadInput = document.getElementById('cantidadInput');
+            const origenSelect = document.getElementById('origenSelect');
+            const destinoSelect = document.getElementById('destinoSelect');
+            const errorMonto = document.getElementById('errorMonto');
+            const errorMonedas = document.getElementById('errorMonedas');
+            
+            let esValido = true;
+
+            // Ocultar errores previos
+            errorMonto.classList.remove('show');
+            errorMonedas.classList.remove('show');
+            cantidadInput.classList.remove('is-invalid');
+
+            // Validar cantidad
+            const cantidad = parseFloat(cantidadInput.value);
+            if (!cantidadInput.value || isNaN(cantidad) || cantidad <= 0) {
+                errorMonto.classList.add('show');
+                cantidadInput.classList.add('is-invalid');
+                mostrarNotificacion('⚠️ Por favor ingrese un monto válido mayor a 0');
+                esValido = false;
+            }
+
+            // Validar que las monedas sean diferentes
+            if (origenSelect.value === destinoSelect.value) {
+                errorMonedas.classList.add('show');
+                mostrarNotificacion('⚠️ Las monedas deben ser diferentes');
+                esValido = false;
+            }
+
+            return esValido;
+        }
+
+        // Limpiar errores al escribir
+        document.getElementById('cantidadInput').addEventListener('input', function() {
+            document.getElementById('errorMonto').classList.remove('show');
+            this.classList.remove('is-invalid');
+        });
+
+        // Limpiar error de monedas al cambiar selección
+        document.getElementById('origenSelect').addEventListener('change', function() {
+            document.getElementById('errorMonedas').classList.remove('show');
+        });
+
+        document.getElementById('destinoSelect').addEventListener('change', function() {
+            document.getElementById('errorMonedas').classList.remove('show');
+        });
+
+        // Prevenir reenvío del formulario al recargar (PRG pattern)
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+    <script th:inline="javascript">
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const origenGuardado = /*[[${monedaOrigen}]]*/ null;
+        const destinoGuardado = /*[[${monedaDestino}]]*/ null;
+        
+        if (origenGuardado) {
+            document.getElementById('origenSelect').value = origenGuardado;
+        }
+        if (destinoGuardado) {
+            document.getElementById('destinoSelect').value = destinoGuardado;
+        }
+    });
+</script>
+</body>
+</html>

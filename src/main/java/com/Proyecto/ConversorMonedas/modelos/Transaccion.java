@@ -1,4 +1,4 @@
-package com.Proyecto.ConversorMonedas.Modelos;
+package com.Proyecto.ConversorMonedas.modelos;
 
 import java.io.Serializable; 
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
-package com.Proyecto.ConversorMonedas.Servicios;
+package com.Proyecto.ConversorMonedas.servicios;
 
-import com.Proyecto.ConversorMonedas.Modelos.TasasConversion;
+import com.Proyecto.ConversorMonedas.modelos.TasasConversion;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

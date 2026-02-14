@@ -1,6 +1,6 @@
 package com.Proyecto.ConversorMonedas;
 
-import com.Proyecto.ConversorMonedas.Servicios.ServicioCambiario;
+import com.Proyecto.ConversorMonedas.servicios.ServicioCambiario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

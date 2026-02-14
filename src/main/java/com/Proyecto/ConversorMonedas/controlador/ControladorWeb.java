@@ -1,7 +1,7 @@
-package com.Proyecto.ConversorMonedas.Principal;
+package com.Proyecto.ConversorMonedas.controlador;
 
-import com.Proyecto.ConversorMonedas.Modelos.Transaccion;
-import com.Proyecto.ConversorMonedas.Servicios.ServicioCambiario;
+import com.Proyecto.ConversorMonedas.modelos.Transaccion;
+import com.Proyecto.ConversorMonedas.servicios.ServicioCambiario;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

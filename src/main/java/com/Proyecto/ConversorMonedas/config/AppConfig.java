@@ -1,4 +1,4 @@
-package com.Proyecto.ConversorMonedas.Config;
+package com.Proyecto.ConversorMonedas.config;
 
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.Proyecto.ConversorMonedas.Principal;
+package com.Proyecto.ConversorMonedas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
